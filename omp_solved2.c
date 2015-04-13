@@ -5,6 +5,8 @@
 * AUTHOR: Blaise Barney 
 * LAST REVISED: 04/06/05 
 ******************************************************************************/
+//The problem: tid and total were shared among all the threads and this casued
+//a race condition. I fixed it by privatizing these variables for each thread.
 #include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
