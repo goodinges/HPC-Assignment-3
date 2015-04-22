@@ -19,7 +19,7 @@ double getResidual(double* u, long N, double d1, double d2)
   return residual;
 }
 
-long main ( long argc, char *argv[] )
+int main ( long argc, char *argv[] )
 {
   long N = atoi(argv[1]);
 
