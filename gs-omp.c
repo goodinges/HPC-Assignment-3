@@ -45,11 +45,17 @@ long main ( long argc, char *argv[] )
 
   //Jacobi
   long k;
+  int j;
   for(k=0;;k++){
+    for(j=0;j<2;j++){
 #pragma omp parallel for
-    for(i=1;i<=N;i++){
-      u[i] = (1 - d2*(pre_u[i-1] + pre_u[i+1]))/d1;
+      for(i=1+j;i<=N;i += 2){
+        u[i] = (1 - d2*(u[i-1] + pre_u[i+1]))/d1;
+      }
     }
+     // for(i=2;i<=N;i += 2){
+      //  u[i] = (1 - d2*(u[i-1] + pre_u[i+1]))/d1;
+     // }
 
 #pragma omp parallel for
     for(i=1;i<=N;i++){
@@ -57,6 +63,7 @@ long main ( long argc, char *argv[] )
     }
 
     residual = getResidual(u,N,d1,d2);
+	//	printf("%li %12.10f\n",k,residual);
 
     if(residual<=threshold){
       printf("%ld iterations\n",k+1);
