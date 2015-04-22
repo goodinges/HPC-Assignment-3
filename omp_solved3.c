@@ -5,7 +5,7 @@
 * AUTHOR: Blaise Barney  01/09/04
 * LAST REVISED: 06/28/05
 ******************************************************************************/
-//The barrier in the print_result funciton caused the hanging problem. It
+//The Problem: The barrier in the print_result funciton caused the hanging problem. It
 //probably wanted all the threads to reach the barrier but not all would call
 //the funciton so I removed it.
 #include <omp.h>

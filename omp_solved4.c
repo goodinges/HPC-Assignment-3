@@ -5,6 +5,9 @@
 * AUTHOR: Blaise Barney  01/09/04
 * LAST REVISED: 04/06/05
 ******************************************************************************/
+//The problem: The stack for each thread doesn't have enough space to
+//accomodate all the space needed for the matrix a. The solution is to allocate
+//the memory on heap. So for each thread a matrix is allocated on the heap.
 #include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,12 +16,16 @@
 int main (int argc, char *argv[]) 
 {
 int nthreads, tid, i, j;
-double a[N][N];
+double** a;
 
 /* Fork a team of threads with explicit variable scoping */
 #pragma omp parallel shared(nthreads) private(i,j,tid,a)
   {
 
+  a = malloc(N * sizeof(double *));
+  for (i = 0; i < N; i++) {
+      a[i] = malloc(N * sizeof(double));
+  }
   /* Obtain/print thread info */
   tid = omp_get_thread_num();
   if (tid == 0) 
