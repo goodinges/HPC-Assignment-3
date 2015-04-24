@@ -54,17 +54,16 @@ int main ( long argc, char *argv[] )
         u[i] = (1 - d2*(u[i-1] + pre_u[i+1]))/d1;
       }
     }
-     // for(i=2;i<=N;i += 2){
-      //  u[i] = (1 - d2*(u[i-1] + pre_u[i+1]))/d1;
-     // }
 
 #pragma omp parallel for
     for(i=1;i<=N;i++){
       pre_u[i] = u[i];
     }
 
+    if((N<1000 && k%100!=0) || (N>=1000&&k%100000!=0)){
+      continue;
+    }
     residual = getResidual(u,residuals,N,d1,d2);
-	//	printf("%li %12.10f\n",k,residual);
 
     if(residual<=threshold){
       printf("%ld iterations\n",k+1);

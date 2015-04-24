@@ -30,10 +30,9 @@ int main ( long argc, char *argv[] )
 
   double* pre_u;
   double* u;
+  double* residuals;
 
   long i;
-
-  double* residuals;
 
   double residual;
 
@@ -58,6 +57,9 @@ int main ( long argc, char *argv[] )
       pre_u[i] = u[i];
     }
 
+    if((N<1000 && k%100!=0) || (N>=1000&&k%100000!=0)){
+      continue;
+    }
     residual = getResidual(u,residuals,N,d1,d2);
 
     if(residual<=threshold){
