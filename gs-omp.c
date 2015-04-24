@@ -5,8 +5,6 @@
 double getResidual(double* u, long N, double d1, double d2)
 {
   long i = 0;
-  double* residuals;
-  residuals = (double*) calloc (N,sizeof(double));
   double residual = 0;
 
 #pragma omp parallel for reduction(+:residual)
@@ -16,8 +14,6 @@ double getResidual(double* u, long N, double d1, double d2)
   }
 
   residual = sqrt(residual);
-
-  free(residuals);
 
   return residual;
 }
@@ -34,6 +30,7 @@ int main ( long argc, char *argv[] )
 
   double* pre_u;
   double* u;
+  double* residuals;
 
   long i;
 
@@ -41,6 +38,7 @@ int main ( long argc, char *argv[] )
 
   pre_u = (double*) calloc (N+2,sizeof(double));
   u = (double*) calloc (N+2,sizeof(double));
+  residuals = (double*) calloc (N,sizeof(double));
 
   residual = getResidual(pre_u,N,d1,d2);
   double threshold = residual;
@@ -76,4 +74,5 @@ int main ( long argc, char *argv[] )
 
   free(u);
   free(pre_u);
+  free(residuals);
 }

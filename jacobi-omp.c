@@ -2,11 +2,9 @@
 #include <stdlib.h>
 #include <math.h>
 
-double getResidual(double* u, long N, double d1, double d2)
+double getResidual(double* u, double* residuals, long N, double d1, double d2)
 {
   long i = 0;
-  double* residuals;
-  residuals = (double*) calloc (N,sizeof(double));
   double residual = 0;
 
 #pragma omp parallel for reduction(+:residual)
@@ -16,8 +14,6 @@ double getResidual(double* u, long N, double d1, double d2)
   }
 
   residual = sqrt(residual);
-
-  free(residuals);
 
   return residual;
 }
@@ -37,12 +33,15 @@ int main ( long argc, char *argv[] )
 
   long i;
 
+  double* residuals;
+
   double residual;
 
   pre_u = (double*) calloc (N+2,sizeof(double));
   u = (double*) calloc (N+2,sizeof(double));
+  residuals = (double*) calloc (N,sizeof(double));
 
-  residual = getResidual(pre_u,N,d1,d2);
+  residual = getResidual(pre_u,residuals,N,d1,d2);
   double threshold = residual;
   threshold /= 1000000;
 
@@ -59,7 +58,7 @@ int main ( long argc, char *argv[] )
       pre_u[i] = u[i];
     }
 
-    residual = getResidual(u,N,d1,d2);
+    residual = getResidual(u,residuals,N,d1,d2);
 
     if(residual<=threshold){
       printf("%ld iterations\n",k+1);
@@ -69,4 +68,5 @@ int main ( long argc, char *argv[] )
 
   free(u);
   free(pre_u);
+  free(residuals);
 }
