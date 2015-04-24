@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-double getResidual(double* u, long N, double d1, double d2)
+double getResidual(double* u, double* residuals, long N, double d1, double d2)
 {
   long i = 0;
   double residual = 0;
@@ -40,7 +40,7 @@ int main ( long argc, char *argv[] )
   u = (double*) calloc (N+2,sizeof(double));
   residuals = (double*) calloc (N,sizeof(double));
 
-  residual = getResidual(pre_u,N,d1,d2);
+  residual = getResidual(pre_u,residuals,N,d1,d2);
   double threshold = residual;
   threshold /= 1000000;
 
@@ -63,7 +63,7 @@ int main ( long argc, char *argv[] )
       pre_u[i] = u[i];
     }
 
-    residual = getResidual(u,N,d1,d2);
+    residual = getResidual(u,residuals,N,d1,d2);
 	//	printf("%li %12.10f\n",k,residual);
 
     if(residual<=threshold){
