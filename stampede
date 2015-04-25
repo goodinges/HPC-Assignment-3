@@ -1,0 +1,41 @@
+Notes:
+  - On 16-core nodes, parallelizing up to 8 threads speeds up the proceess. More than that
+  is time sharing and degrade the performance dramitacally.
+  - If N is not big enough the overhead of parallelization defeats it's purpose. For
+  my jacobi implementation for example N=5000 shows the advantage clearly.
+
+Results on Stampede:
+
+Jacobi:
+  N=1000
+    Threads Runtime
+    1       00:00:21
+    2       00:00:24
+    4       00:00:24
+    8       00:00:24
+    16      00:01:56
+
+  N=2000
+    Threads Runtime
+    1       00:01:37 
+    2       00:01:30
+    4       00:01:21
+    8       00:01:22
+    16      00:08:02
+
+  N=5000
+    Threads Runtime
+    1       00:23:18
+    2       00:15:41
+    4       00:10:55
+    8       00:10:04
+    16      00:45:17
+
+Gauss-Seidel:
+  N=5000
+    Threads Runtime
+    1       00:18:01
+    2       00:14:03
+    4       00:10:59
+    8       00:10:35
+    16      00:36:29
