@@ -7,7 +7,7 @@ Notes:
 Results on Stampede:
 
 Jacobi:
-  N=1000
+  N=1000, Iterations=2,800,000
     Threads Runtime
     1       00:00:21
     2       00:00:24
@@ -15,7 +15,7 @@ Jacobi:
     8       00:00:24
     16      00:01:56
 
-  N=2000
+  N=2000, Iterations=11,200,000
     Threads Runtime
     1       00:01:37 
     2       00:01:30
@@ -23,16 +23,18 @@ Jacobi:
     8       00:01:22
     16      00:08:02
 
-  N=5000
+  N=5000, Iterations=69,500,000
     Threads Runtime
     1       00:23:18
     2       00:15:41
     4       00:10:55
     8       00:10:04
     16      00:45:17
+    16      00:19:48 (on 32-core node)
+    32      01:08:46
 
 Gauss-Seidel:
-  N=5000
+  N=5000, Iterations=52,400,000
     Threads Runtime
     1       00:18:01
     2       00:14:03
